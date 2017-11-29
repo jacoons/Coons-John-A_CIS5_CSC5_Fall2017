@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Largest_Smallest_Array_Values
+PROJECTNAME=Largest Smallest Array Values
 
 # Active Configuration
 DEFAULTCONF=Debug
