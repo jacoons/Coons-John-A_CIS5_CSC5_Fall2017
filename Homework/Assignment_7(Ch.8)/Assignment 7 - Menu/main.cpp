@@ -47,9 +47,7 @@ int main(int argc, char** argv) {
             case 4:prob4();break;
             case 5:prob5();break;
             case 6:prob6();break;
-            case 7:prob7();break;
-            case 8:prob8();break;
-            case 9:prob9();break;
+            
             default:{
                 cout<<"Exiting, have a great day!"<<endl;
             }
@@ -400,17 +398,6 @@ void SelectionSort(int array[], int size)
 }
 
 
-void prob7(){
-    cout<<"You are in Problem 7"<<endl;
-}
-
-void prob8(){
-    cout<<"You are in Problem 8"<<endl;
-}
-
-void prob9(){
-    cout<<"You are in Problem 9"<<endl;
-}
 
 void menu(){
     //Input Data/Variables
