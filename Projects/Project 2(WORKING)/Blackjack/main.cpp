@@ -106,7 +106,7 @@ int Hand::GetTotal() const
 {
 
   //if no cards in hand, return 0
-  if (m_Cards.empty()) return 0;
+  if (m_Cards.empty()) //return 0;
 
   //if a first card has value of 0, then card is face down; return 0
   if (m_Cards[0]->GetValue() == 0) return 0;
@@ -351,9 +351,9 @@ Game::~Game() {}
 
 void Instructions()
 {
-  cout << "\tGoal: Reach 21 without going over\n\n";
+  cout << "\tGoal: Obtain a maximum value of cards without exceeding 21.\n\n";
   cout << "\tThe House (computer player) will be playing against you\n\n";
-  cout << "\tIf the House busts (goes over), all players who\n";
+  cout << "\tIf the House busts, all players who\n";
   cout << "\thaven't busted will win.\n\n";
   cout << "\tIf the House doesn't bust, all players\n";
   cout << "\twho haven't busted, will win, if their\n";
@@ -428,7 +428,7 @@ void Game::Play()
   m_House.Clear();
 }
 
-//overload operatore<<() function prototypes
+//overload operator<<() function prototypes
 ostream& operator<<(ostream& os, const Card& aCard);
 ostream& operator<<(ostream& os, const GenericPlayer& aGenericPlayer);
 
