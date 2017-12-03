@@ -11,7 +11,7 @@ using namespace std;
 const int MAX_DIE = 5;
 const int MAX_TURNS = 13;
 const int MAX_ROUNDS = 8;
-const int SCORE_CATEGORIES = 15;
+const int SCORE_CATEGORIES = 14;
 
 // The title for the program
 void title()
@@ -148,7 +148,9 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             }
         }
     }
-    string category[14] = { "Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "3 of a Kind", "4 of a  Kind", "Full House", "Small Straight", "Large Straight", "Yahtzee", "Chance", "Next Player" };
+    string category[13] = { "Ones", "Twos", "Threes", "Fours", "Fives", "Sixes",
+    "3 of a Kind", "4 of a  Kind", "Full House", "Small Straight", 
+    "Large Straight", "Yahtzee", "Next Player" };
     bool repeat;
     do
     {
@@ -161,20 +163,20 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
         }
 
         // Remove used categories from list
-        for (int i = 0; i < 14; ++i)
+        for (int i = 0; i < 13; ++i)
         {
             if (scoreCard[player][i] != 0)
                 category[i] = "----";
         }
         // Display score menu
         cout << "\n Select a Score Category:" << endl;
-        cout << "1. " << category[0] << " \t 7. " << category[6] << "\t\t 13. " <<category[12]<< endl;
-        cout << "2. " << category[1] << " \t 8. " << category[7] << "\t 14. " <<category[13]<< endl;
-        cout << "3. " << category[2] << " \t 9. " << category[8] <<endl;
+        cout << "1. " << category[0] << " \t 7. " << category[6] <<"\t13. " << category[12] <<endl;
+        cout << "2. " << category[1] << " \t 8. " << category[7] << endl;
+        cout << "3. " << category[2] << " \t 9. " << category[8] << endl;
         cout << "4. " << category[3] << " \t 10. " << category[9] << endl;
         cout << "5. " << category[4] << " \t 11. " << category[10] << endl;
-        cout << "6. " << category[5] << " \t 12. " <<category[11]<<endl;
-       
+        cout << "6. " << category[5] << " \t 12. " << category[11] << endl;
+        
         cout << "Enter your Selection: ";
         int option;
         cin >> option;
@@ -537,29 +539,8 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
                 break;
             }
 
-        case 13:
-            if (scoreCard[player][12] == 0)
-            {
-                int tempScore = 0;
-                for (int i = 0; i < MAX_DIE; ++i)
-                    tempScore += die[i];
-                if (tempScore == 0)
-                {
-                    tempScore = -1;
-                }
-                scoreCard[player][12] = tempScore;
-                break;
-            }
-            else if (scoreCard[player][12] != 0)
-            {
-                cout << "---------------------------------------------------" << endl;
-                cout << "This scoring option has already been chosen; choose another." << endl;
-                cout << "---------------------------------------------------" << endl;
-                repeat = true;
-                break;
-            }
+        case 13:break;
             
-            case 14:break;
             
 
         default:
@@ -609,7 +590,7 @@ void calcScore(vector<vector<int>> &scoreCard, int player)
         lowerScore += scoreCard[player][i];
     }
     // Assign players score
-    scoreCard[player][14] = upperScore + lowerScore;
+    scoreCard[player][13] = upperScore + lowerScore;
 }
 
 // Sorting the score
@@ -711,7 +692,7 @@ int main()
         }
         for (int i = 0; i < MAX_PLAYERS; ++i)
         {
-            roundScore[round][i] = scoreCard[i][14];
+            roundScore[round][i] = scoreCard[i][13];
         }
 
         // Ask to display round scores
@@ -720,8 +701,6 @@ int main()
         cin >> option;
         if (toupper(option) == 'Y')
         {
-            
-            //cout << "Round: ";
             // Display played round numbers
             int x = 1;
             for (int i = 0; i < round + 1; ++i)
