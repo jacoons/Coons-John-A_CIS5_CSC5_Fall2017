@@ -3,6 +3,7 @@
 #include <sstream>       
 #include <vector>       
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
@@ -10,30 +11,51 @@ using namespace std;
 const int MAX_DIE = 5;
 const int MAX_TURNS = 13;
 const int MAX_ROUNDS = 8;
-const int SCORE_CATEGORIES = 14;
+const int SCORE_CATEGORIES = 15;
 
 // The title for the program
-void tiTLE()
+void title()
 {
-    cout << "======================================================================" << endl;
-    cout << "  *Multiplayer*   \t | YAHTZEE GAME |" << endl;
-    cout << "======================================================================" << endl;
+   fstream fIn;
+fIn.open( "title.txt", ios::in );
+
+if( fIn.is_open() )
+{
+  string s;
+  while( getline( fIn, s ) )
+  {
+    cout << s << endl;
+    // Tokenize s here into columns (probably on spaces)
+  }
+  fIn.close();
+}
+else
+  cout << "Error opening file " << errno << endl;
+    
+
 }
 // Game instructions
-void instruCTIONS()
+void instructions()
 {
-    cout << "\n    \t\t    ---Game Rules--" << endl;
-    cout << "\n The game consists of 13 rounds. Each player rolls five dice and";
-    cout << "\n attempts to score different combinations. Each turn consists of 3 rolls.";
-    cout << "\n A round is complete when each player has taken their turn. For each";
-    cout << "\n roll, the player may choose to keep any number of dice he or she wishes.";
-    cout << "\n The object of the game is to fill every possible scoring combination,";
-    cout << "\n and the player with the highest total score wins! For each round, each";
-    cout << "\n player must enter a score into one of the combinations. The player may";
-    cout << "\n enter a 0 into any box if he or she does not wish to enter a score for";
-    cout << "\n the current dice combination left at the end of the turn." << endl;
-    cout << "======================================================================" << endl;
-    cout << endl;
+    
+fstream fIn;
+fIn.open( "rules.txt", ios::in );
+
+if( fIn.is_open() )
+{
+  string s;
+  while( getline( fIn, s ) )
+  {
+    cout << s << endl;
+    // Tokenize s here into columns (probably on spaces)
+  }
+  fIn.close();
+}
+else
+  cout << "Error opening file " << errno << endl;
+    
+
+    
 }
 // The function to see how many players are going to play
 int getPlayerCount()
@@ -83,16 +105,19 @@ void rollDie(int die[])
     for (int turn = 1; turn < MAX_TURNS; ++turn)
     {
         cout << "\n Do you want to reroll any dice? (y/n)" << endl;
-        char reroll; cin >> reroll;
+        char reroll; 
+        cin >> reroll;
         // Determine which dice to reroll
         if (toupper(reroll) == 'Y')
         {
             for (int i = 0; i < MAX_DIE; ++i)
             {
                 cout << "Reroll Die " << die[i] << "? (y/n)";
-                char rerollDie; cin >> rerollDie;
+                char rerollDie; 
+                cin >> rerollDie;
                 // Reroll die
-                if (toupper(rerollDie) == 'Y') die[i] = rand() % 6 + 1;
+                if (toupper(rerollDie) == 'Y') 
+                    die[i] = rand() % 6 + 1;
             }
             //  Display new and current roll, if a reroll was selected
             cout << "\n New roll, your dice are: ";
@@ -123,7 +148,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             }
         }
     }
-    string category[13] = { "Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "3 of a Kind", "4 of a  Kind", "Full House", "Small Straight", "Large Straight", "Yahtzee", "Chance" };
+    string category[14] = { "Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "3 of a Kind", "4 of a  Kind", "Full House", "Small Straight", "Large Straight", "Yahtzee", "Chance", "Next Player" };
     bool repeat;
     do
     {
@@ -136,20 +161,20 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
         }
 
         // Remove used categories from list
-        for (int i = 0; i < 13; ++i)
+        for (int i = 0; i < 14; ++i)
         {
             if (scoreCard[player][i] != 0)
                 category[i] = "----";
         }
         // Display score menu
-        cout << "\n Select a Score Catagory:" << endl;
-        cout << "1. " << category[0] << " \t 7. " << category[6] << endl;
-        cout << "2. " << category[1] << " \t 8. " << category[7] << endl;
-        cout << "3. " << category[2] << " \t 9. " << category[8] << endl;
+        cout << "\n Select a Score Category:" << endl;
+        cout << "1. " << category[0] << " \t 7. " << category[6] << "\t\t 13. " <<category[12]<< endl;
+        cout << "2. " << category[1] << " \t 8. " << category[7] << "\t 14. " <<category[13]<< endl;
+        cout << "3. " << category[2] << " \t 9. " << category[8] <<endl;
         cout << "4. " << category[3] << " \t 10. " << category[9] << endl;
         cout << "5. " << category[4] << " \t 11. " << category[10] << endl;
-        cout << "6. " << category[5] << " \t 12. " << category[11] << endl;
-        cout << "\t\t 13. " << category[12] << endl;
+        cout << "6. " << category[5] << " \t 12. " <<category[11]<<endl;
+       
         cout << "Enter your Selection: ";
         int option;
         cin >> option;
@@ -178,7 +203,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][0] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this socre option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -205,7 +230,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][1] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this socre option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -232,7 +257,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][2] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this socre option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -259,7 +284,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][3] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this socre option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -286,7 +311,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][4] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this socre option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -313,7 +338,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][5] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this socre option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -343,7 +368,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][6] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this socre option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -373,7 +398,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][7] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this socre option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -410,7 +435,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][8] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this score option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -442,7 +467,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][9] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this score option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -473,9 +498,12 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             }
             else if (scoreCard[player][10] != 0)
             {
-                cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this score option, please pick another one." << endl;
-                cout << "---------------------------------------------------" << endl;
+                cout << "---------------------------------------------------" 
+                        << endl;
+                cout << "This scoring option has already been chosen; choose "
+                        "another." << endl;
+                cout << "---------------------------------------------------" 
+                        << endl;
                 repeat = true;
                 break;
             }
@@ -503,7 +531,7 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][11] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this score option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
@@ -525,11 +553,14 @@ void placeScore(int die[], vector<vector<int>> &scoreCard, int player)
             else if (scoreCard[player][12] != 0)
             {
                 cout << "---------------------------------------------------" << endl;
-                cout << "Sorry you already use this score option, please pick another one." << endl;
+                cout << "This scoring option has already been chosen; choose another." << endl;
                 cout << "---------------------------------------------------" << endl;
                 repeat = true;
                 break;
             }
+            
+            case 14:break;
+            
 
         default:
             cout << "---------------------------------------------------" << endl;
@@ -569,7 +600,7 @@ void calcScore(vector<vector<int>> &scoreCard, int player)
     if (upperScore > 62)
     {
         upperScore += 35;
-        cout << "WOOHOOO Recieved Bonus Score!" << endl;
+        cout << "Received Bonus Score!" << endl;
         cout << "-----------------------------" << endl;
     }
     // Lower score
@@ -578,7 +609,7 @@ void calcScore(vector<vector<int>> &scoreCard, int player)
         lowerScore += scoreCard[player][i];
     }
     // Assign players score
-    scoreCard[player][13] = upperScore + lowerScore;
+    scoreCard[player][14] = upperScore + lowerScore;
 }
 
 // Sorting the score
@@ -635,8 +666,8 @@ int main()
 {
    
 
-    tiTLE();
-    instruCTIONS();
+    title();
+    instructions();
     const int MAX_PLAYERS = getPlayerCount();
 
     vector<string> playerName(MAX_PLAYERS);
@@ -680,7 +711,7 @@ int main()
         }
         for (int i = 0; i < MAX_PLAYERS; ++i)
         {
-            roundScore[round][i] = scoreCard[i][13];
+            roundScore[round][i] = scoreCard[i][14];
         }
 
         // Ask to display round scores
@@ -689,10 +720,15 @@ int main()
         cin >> option;
         if (toupper(option) == 'Y')
         {
+            
+            //cout << "Round: ";
             // Display played round numbers
+            int x = 1;
             for (int i = 0; i < round + 1; ++i)
             {
-                cout << "\tRound " << round + 1;
+                
+                cout <<"\tRound "<< x;
+                x++;
             } cout << endl;
 
             // Display player names and their final scores for each round played
