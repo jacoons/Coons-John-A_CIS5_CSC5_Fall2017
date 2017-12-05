@@ -1,0 +1,14 @@
+
+
+RULES: The game consists of 13 rounds. Each player rolls five dice and
+attempts to score different combinations. Each turn consists of 3 rolls.
+A round is complete when each player has taken their turn. For each
+roll, the player may choose to keep any number of dice he or she wishes.
+The object of the game is to fill every possible scoring combination,
+and the player with the highest total score wins! For each round, each
+player must enter a score into one of the combinations. The player may
+enter a 0 into any box if he or she does not wish to enter a score for
+the current dice combination left at the end of the turn.
+
+
+              	       Good luck, and have fun!!!
