@@ -1,0 +1,28 @@
+-----------------------------Game Rules---------------------------------
+This game can be played by more people than you will ever be able to get
+together for Yahtzee.  The game is relatively easy and striaght forward.
+There are 13 rounds total.  One round consists of each player rolling 3 
+times.  After each roll the player chooses which dice to keep and then 
+rolls the remaining dice.  A round is considered to be over when all 
+players have rolled 3 times.  The object of the game is to obtain as 
+many scoring combinations as possible; you can only score once per 
+combination (i.e. you cannot get points for a three of a kind more than 
+once). The scoring combinations are below:
+
+	1.) Ones - Two number one dice.
+	2.) Twos - Two number two dice.
+	3.) Threes - Two number three dice.
+	4.) Fours - Two number four dice.
+	5.) Fives - Two number five dice.
+	6.) Sixes - Two number six dice.
+	7.) 3 of a Kind - Three dice of the same value.
+	8.) 4 of a Kind - Four dice of the same value.
+	9.) Full House - Three dice of the same value and two dice of 
+	         	 another value.
+	10.) Small Straight - Four dice with consecutive values.
+	11.) Large Straight - Five dice with consecutive values.
+	12.) Yahtzee - Five dice with the same value.
+
+------------------------------------------------------------------------ 
+
+    
