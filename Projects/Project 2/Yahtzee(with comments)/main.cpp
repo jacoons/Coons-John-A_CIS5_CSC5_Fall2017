@@ -8,9 +8,9 @@
 
 using namespace std;
 
-// Function declarations sumInitialRoll() is called each game to determine who 
+// Function declarations sum() is called each game to determine who 
 //in a group of players starts. rollDie() is called for each dice roll.
-int sumInitialRoll(long t2);
+int sum(long t2);
 int rollDie(long t2);  
 void info();
 void title();
@@ -92,11 +92,11 @@ int main(int argc, char* argv[])
            // Create vector to store and sort each player's initial role. 
            //Vector is destroyed upon exit of if statement.
            vector<int> initRolls;
-           // For loop calls sumInitialRoll() function, prints the return, and
+           // For loop calls sum() function, prints the return, and
            //adds an element and assigns the roll to the vector.
            for(int i = 0; i < numOfPlayers; i++)
            {          
-               int firstRoll = sumInitialRoll(t2);
+               int firstRoll = sum(t2);
                cout << "\n\tNumber " << (i+1) << "'s sum of the initial roll "
                        "is: " << firstRoll;
                initRolls.push_back(firstRoll);
@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
                // For loop re-rolls dice.
                for(int i = 0; i < numOfPlayers; i++)
                {
-                   int firstRoll = sumInitialRoll(t2);
+                   int firstRoll = sum(t2);
                    cout << "\n\tNumber " << (i+1) << "'s sum of the initial "
                            "roll is: " << firstRoll;
                    initRolls.push_back(firstRoll);
@@ -600,9 +600,9 @@ int main(int argc, char* argv[])
    return 0;
 }
 
-// sumInitialRoll Function - Used if number of players is higher than one, 
+// sum Function - Used if number of players is higher than one, 
 //returns
-int sumInitialRoll(long t2)
+int sum(long t2)
 {
     int roll1 = (rand() % 6 + 1);
    int roll2 = (rand() % 6 + 1);

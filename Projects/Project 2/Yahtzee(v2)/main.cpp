@@ -8,13 +8,13 @@
 
 using namespace std;
 
-// Function declarations sumInitialRoll() is called each game to determine who 
+// Function declarations sum() is called each game to determine who 
 //in a group of players starts. rollDie() is called for each dice roll.
-int sumInitialRoll(long t2);
+int sum(long t2);
 int rollDie(long t2);  
 void info();
 void title();
-void instructions(); 
+void inst(); 
 
 int main(int argc, char* argv[])
 {  
@@ -26,35 +26,35 @@ int main(int argc, char* argv[])
    srand(t2);
   
    // vector for final list of scores <scores, name>
-   vector<pair<int, string> > playerScores;
+   vector<pair<int, string> > pScore;
    title();
-   instructions();   
+   inst();   
 
-   // Game loop. Initialize playAgain to "Y" to start game. At the end of the 
+   // Game loop. Initialize pAgain to "Y" to start game. At the end of the 
    //game, user may select Y to restart the game or "N" to end the game.
-   string playAgain = "Y";
-   while(playAgain == "Y")
+   string pAgain = "Y";
+   while(pAgain == "Y")
    {
        // Prompt for, and input number of players
-       int numOfPlayers = 0;
+       int numP = 0;
        cout << "\n\n\tPlease enter the number of players for this game(1-4): ";
-       cin >> numOfPlayers;
+       cin >> numP;
       
        // If player(s) have entered invalid number of players, prompt to enter 
        //again.
-       while((numOfPlayers >= 5) || (numOfPlayers <= 0))
+       while((numP >= 5) || (numP <= 0))
        {      
            cout << "\n\tSorry, but only 1 to 4 people may play in a game.";
            cout << "\n\tPlease enter the number of players for this game "
                    "(1-4): ";
-           cin >> numOfPlayers;
+           cin >> numP;
        }
 
        // Create vector to store current player's names
        vector<string> names;
       
        // If this is a solo game.
-       if(numOfPlayers == 1)
+       if(numP == 1)
        {
            string name;
          
@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
        }
       
        // If playing with group of people (no more than four)
-       else if(numOfPlayers > 1)
+       else if(numP > 1)
        {
            // Users enter okay when ready to roll for who starts. string 
            //message used to ensure user enters OK correctly.
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
            cout << "\n\tThe player with the highest total sum will start the "
                    "game.";
            cout << "\n\n\tEach player select a number between 1 and " 
-                   << numOfPlayers << ".";
+                   << numP << ".";
            cout << "\n\tRemember your number. Each player's roll is determined "
                    "by their number.";
            cout << "\n\n\tType 'OK' when each player has a number: ";
@@ -91,36 +91,36 @@ int main(int argc, char* argv[])
 
            // Create vector to store and sort each player's initial role. 
            //Vector is destroyed upon exit of if statement.
-           vector<int> initRolls;
-           // For loop calls sumInitialRoll() function, prints the return, and
+           vector<int> initR;
+           // For loop calls sum() function, prints the return, and
            //adds an element and assigns the roll to the vector.
-           for(int i = 0; i < numOfPlayers; i++)
+           for(int i = 0; i < numP; i++)
            {          
-               int firstRoll = sumInitialRoll(t2);
+               int fRoll = sum(t2);
                cout << "\n\tNumber " << (i+1) << "'s sum of the initial roll "
-                       "is: " << firstRoll;
-               initRolls.push_back(firstRoll);
+                       "is: " << fRoll;
+               initR.push_back(fRoll);
            }
               
            // Sort initial rolls and compare two highest rolls to ensure there 
            //was not a tie for who goes first.
-           sort(initRolls.rbegin(), initRolls.rend());
+           sort(initR.rbegin(), initR.rend());
               
            // while loop compares the two highest rolls. If there is a tie, 
            //initiates a re-roll.
-           while(initRolls[0] == initRolls[1])
+           while(initR[0] == initR[1])
            {
                // Clears first rolls, informs players of the tie.
-               initRolls.clear();
+               initR.clear();
                cout << "\n\tThere is a tie, re-rolling die. "
                        "(Remember your number!)";
                // For loop re-rolls dice.
-               for(int i = 0; i < numOfPlayers; i++)
+               for(int i = 0; i < numP; i++)
                {
-                   int firstRoll = sumInitialRoll(t2);
+                   int fRoll = sum(t2);
                    cout << "\n\tNumber " << (i+1) << "'s sum of the initial "
-                           "roll is: " << firstRoll;
-                   initRolls.push_back(firstRoll);
+                           "roll is: " << fRoll;
+                   initR.push_back(fRoll);
                }
            }
 
@@ -128,7 +128,7 @@ int main(int argc, char* argv[])
            //be played. Stores each name in vector "names."
            cout << "\n\n\tEnter name(s) in the order they take their turn." 
                    << endl;
-           for(int i = 0; i < numOfPlayers; i++)
+           for(int i = 0; i < numP; i++)
            {
                string name;
                cout << "\n\n\tPlease enter player " << (i+1) << "'s name: ";
@@ -138,19 +138,19 @@ int main(int argc, char* argv[])
        }  
                   
        /*       
-       * Arrays track player's score. scoreComb ensures player cannot enter
+       * Arrays track player's score. sComb ensures player cannot enter
        * score into same score category more than once,
        * and combPoints stores the points for each category.
        * For loop and nested For loop initialize arrays, and set all categories 
        * to false, or unused for each player, and to -1 (1-4).
        */
-       bool scoreComb[4][13];
+       bool sComb[4][13];
        int combPoints[4][13];
            for(unsigned int j = 0; j < 4; j++)  
            {
                for(unsigned int k = 0; k < 13; k++)
                {              
-                   scoreComb[j][k] = false;                  
+                   sComb[j][k] = false;                  
                    combPoints[j][k] = 0;
                }
            }
@@ -174,7 +174,7 @@ int main(int argc, char* argv[])
        {
            // For loop cycles through each player for every round. Each loop 
            //is a player's turn.              
-           for(int i = 0; i < numOfPlayers; i ++)
+           for(int i = 0; i < numP; i ++)
            {
                // "keepers" used to determine which dice are held, and which 
                //to re-roll.
@@ -259,7 +259,7 @@ int main(int argc, char* argv[])
                //holds a score, and prints appropriate response or returns to 
                //tryAgain.
                case 1:              
-                   if(scoreComb[i][1] == true)
+                   if(sComb[i][1] == true)
                    {
                        cout << "\n\tAces have already been scored.";
                        goto tryAgain;
@@ -269,13 +269,13 @@ int main(int argc, char* argv[])
                        cout << "\n\tEnter the sum of all the ONES in your hand,"
                                " or a 0: ";
                        cin >> combPoints[i][1];
-                       scoreComb[i][1] = true;
+                       sComb[i][1] = true;
                        break;
                    }
                // if user has entered 2, checks to see if category already 
                //holds a score, and prints appropriate response or returns to tryAgain.
                case 2:
-                   if(scoreComb[i][2] == true)
+                   if(sComb[i][2] == true)
                    {
                        cout << "\n\tTwos have already been scored.";
                        goto tryAgain;
@@ -285,14 +285,14 @@ int main(int argc, char* argv[])
                        cout << "\n\tEnter the sum of all TWOS in your hand, "
                                "or a 0: ";
                        cin >> combPoints[i][2];
-                       scoreComb[i][2] = true;
+                       sComb[i][2] = true;
                        break;
                    }
                // if user has entered 3, checks to see if category already 
                //holds a score, and prints appropriate response or returns to 
                //tryAgain.
                case 3:
-                   if(scoreComb[i][3] == true)
+                   if(sComb[i][3] == true)
                    {
                        cout << "\n\tThrees have already been scored.";
                        goto tryAgain;
@@ -302,14 +302,14 @@ int main(int argc, char* argv[])
                        cout << "\n\tEnter the sum of all the THREES in your "
                                "hand, or a 0: ";
                        cin >> combPoints[i][3];
-                       scoreComb[i][3] = true;
+                       sComb[i][3] = true;
                        break;
                    }
                // if user has entered 4, checks to see if category already
                //holds a score, and prints appropriate response or returns to 
                //tryAgain.
                case 4:
-                   if(scoreComb[i][4] == true)
+                   if(sComb[i][4] == true)
                    {
                        cout << "\n\tFours have already been scored.";
                        goto tryAgain;
@@ -319,13 +319,13 @@ int main(int argc, char* argv[])
                        cout << "\n\tEnter the sum of all the FOURS in your"
                                " hand, or a 0: ";
                        cin >> combPoints[i][4];
-                       scoreComb[i][4] = true;
+                       sComb[i][4] = true;
                        break;
                    }
                // if user has entered 5, checks to see if category already
                //holds a score, and prints appropriate response or returns to tryAgain.
                case 5:
-                   if(scoreComb[i][5] == true)
+                   if(sComb[i][5] == true)
                    {
                        cout << "\n\tFives have already been scored.";
                        goto tryAgain;
@@ -334,13 +334,13 @@ int main(int argc, char* argv[])
                    {
                        cout << "\n\tEnter the sum of all the FIVES in your hand, or a 0: ";
                        cin >> combPoints[i][5];
-                       scoreComb[i][5] = true;
+                       sComb[i][5] = true;
                        break;
                    }
                // if user has entered 6, checks to see if category already 
                //holds a score, and prints appropriate response or returns to tryAgain.
                case 6:
-                   if(scoreComb[i][6] == true)
+                   if(sComb[i][6] == true)
                    {
                        cout << "\n\tSixes have already been scored.";
                        goto tryAgain;
@@ -350,14 +350,14 @@ int main(int argc, char* argv[])
                        cout << "\n\tEnter the sum of all the SIXES in your "
                                "hand, or a 0: ";
                        cin >> combPoints[i][6];
-                       scoreComb[i][6] = true;
+                       sComb[i][6] = true;
                        break;
                    }
                // if user has entered 7, checks to see if category already 
                //holds a score, and prints appropriate response or returns 
                //to tryAgain.
                case 7:
-                   if(scoreComb[i][7] == true)
+                   if(sComb[i][7] == true)
                    {
                        cout << "\n\t3 of a Kind has already been scored.";
                        goto tryAgain;
@@ -367,14 +367,14 @@ int main(int argc, char* argv[])
                        cout << "\n\tEnter the sum of all dice in your hand, or "
                                "a 0: ";
                        cin >> combPoints[i][7];
-                       scoreComb[i][7] = true;
+                       sComb[i][7] = true;
                        break;
                    }
                // if user has entered 8, checks to see if category already 
                //holds a score, and prints appropriate response or returns to 
                //tryAgain.
                case 8:
-                   if(scoreComb[i][8] == true)
+                   if(sComb[i][8] == true)
                    {
                        cout << "\n\t4 of a Kind has already been scored.";
                        goto tryAgain;
@@ -384,14 +384,14 @@ int main(int argc, char* argv[])
                        cout << "\n\tEnter the sum of all dice in your hand, "
                                "or a 0: ";
                        cin >> combPoints[i][8];
-                       scoreComb[i][8] = true;
+                       sComb[i][8] = true;
                        break;
                    }
                // if user has entered 9, checks to see if category already 
                //holds a score, and prints appropriate response or returns to 
                //tryAgain.
                case 9:
-                   if(scoreComb[i][9] == true)
+                   if(sComb[i][9] == true)
                    {
                        cout << "\n\tFull House has already been scored.";
                        goto tryAgain;
@@ -401,14 +401,14 @@ int main(int argc, char* argv[])
                        cout << "\n\tIf you have a Full House, enter 25. "
                                "Otherwise, enter 0: ";
                        cin >> combPoints[i][9];
-                       scoreComb[i][9] = true;
+                       sComb[i][9] = true;
                        break;
                    }
                // if user has entered 10, checks to see if category already
                //holds a score, and prints appropriate response or returns to 
                //tryAgain.
                case 10:
-                   if(scoreComb[i][10] == true)
+                   if(sComb[i][10] == true)
                    {
                        cout << "\n\tSmall Straight has already been scored.";
                        goto tryAgain;
@@ -418,14 +418,14 @@ int main(int argc, char* argv[])
                        cout << "\n\tIf you have a Small Straight, enter 30. "
                                "Otherwise, enter 0: ";
                        cin >> combPoints[i][10];
-                       scoreComb[i][10] = true;
+                       sComb[i][10] = true;
                        break;
                    }
                // if user has entered 11, checks to see if category already 
                //holds a score, and prints appropriate response or returns to 
                //tryAgain.
                case 11:
-                   if(scoreComb[i][11] == true)
+                   if(sComb[i][11] == true)
                    {
                        cout << "\n\tLarge Straight has already been scored.";
                        goto tryAgain;
@@ -435,14 +435,14 @@ int main(int argc, char* argv[])
                        cout << "\n\tIf you have a Large Straight, enter "
                                "40. Otherwise, enter 0: ";
                        cin >> combPoints[i][11];
-                       scoreComb[i][11] = true;
+                       sComb[i][11] = true;
                        break;
                    }
                // if user has entered 12, checks to see if category already 
                //holds a score, and prints appropriate response or returns to 
                //tryAgain.
                case 12:
-                   if(scoreComb[i][12] == true)
+                   if(sComb[i][12] == true)
                    {
                        // If statement to determine whether Yahtzee has been 
                        //previously scored or if a 0 was entered.
@@ -479,14 +479,14 @@ int main(int argc, char* argv[])
                        cout << "\n\tIf you have scored YAHTZEE!, enter 50. "
                                "Otherwise, enter 0: ";
                        cin >> combPoints[i][12];
-                       scoreComb[i][12] = true;
+                       sComb[i][12] = true;
                        break;
                    }
                // if user has entered 13, checks to see if category already 
                //holds a score, and prints appropriate response or returns to 
                //tryAgain.
                case 13:
-                   if(scoreComb[i][13] == true)
+                   if(sComb[i][13] == true)
                    {
                        cout << "\n\tChance has already been scored.";
                        goto tryAgain;
@@ -496,7 +496,7 @@ int main(int argc, char* argv[])
                        cout << "\n\tIf using chance, enter sum of all dice."
                                " Otherwise, enter 0: ";
                        cin >> combPoints[i][13];
-                       scoreComb[i][13] = true;
+                       sComb[i][13] = true;
                        break;
                    }
                // if user has entered an inappropriate number, informs player 
@@ -533,7 +533,7 @@ int main(int argc, char* argv[])
                    combPoints[i][11] + combPoints[i][12]);
        }  
   
-       for(int i = 0; i < numOfPlayers; i++)
+       for(int i = 0; i < numP; i++)
        {
            // tempScore used to total specific player's score. Once finished, 
            //applies final score to vector "finalScores."
@@ -555,9 +555,9 @@ int main(int argc, char* argv[])
            tempScore += (uppSectTotals[i] + lowSectTotals[i]);
           
            // Adds tempScore to finalScores vector, and pairs the players name 
-           //and final score into playerScores vector for the high scores list.
+           //and final score into pScore vector for the high scores list.
            finalScores.push_back(tempScore);  
-           playerScores.push_back(make_pair(finalScores[i], names[i]));
+           pScore.push_back(make_pair(finalScores[i], names[i]));
        }
       
        // High scores list header.
@@ -569,9 +569,9 @@ int main(int argc, char* argv[])
        // Sorts player scores from highest to lowest, then prints list. Notice 
        //iterator->second(names) is printed first, and iter->first (scores) is 
        //printed second.
-       sort(playerScores.rbegin(), playerScores.rend());
-       for(vector<pair<int, string> >::const_iterator iter = playerScores.begin
-               (); iter != playerScores.end(); iter++)
+       sort(pScore.rbegin(), pScore.rend());
+       for(vector<pair<int, string> >::const_iterator iter = pScore.begin
+               (); iter != pScore.end(); iter++)
        {
            cout << "\t" << iter->second << " " << iter->first << ".\n\n";
        }
@@ -580,15 +580,15 @@ int main(int argc, char* argv[])
        //of game loop (restart the game, score list is saved)
        cout << "\n\n\t\tWould you like to play again?";
        cout << "\n\tEnter 'Y' to play again, or 'N' to end the game.";
-       cin >> playAgain;
+       cin >> pAgain;
       
        // Ensures user enters a valid Play Again answer. If not, prompts user 
        //to re-enter letter.
-       while((playAgain != "Y") && (playAgain != "N"))
+       while((pAgain != "Y") && (pAgain != "N"))
        {
            cout << "\n\tThat answer is invalid. Enter capital 'Y' or capital "
                    "'N.'";
-           cin >> playAgain;
+           cin >> pAgain;
        }
 
        // Clears names and finalScores vectors for new game
@@ -600,9 +600,9 @@ int main(int argc, char* argv[])
    return 0;
 }
 
-// sumInitialRoll Function - Used if number of players is higher than one, 
+// sum Function - Used if number of players is higher than one, 
 //returns
-int sumInitialRoll(long t2)
+int sum(long t2)
 {
     int roll1 = (rand() % 6 + 1);
    int roll2 = (rand() % 6 + 1);
@@ -641,7 +641,7 @@ if( fIn.is_open() )
 
 }
 //Game instructions
-void instructions()
+void inst()
 {
    fstream fIn;
 fIn.open( "rules.txt", ios::in );
