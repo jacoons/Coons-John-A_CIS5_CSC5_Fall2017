@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=Cygwin-Windows
 CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin-Windows
-CND_ARTIFACT_NAME_Debug=yahtzee_v1_
-CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/yahtzee_v1_
+CND_ARTIFACT_NAME_Debug=yahtzee_v4_
+CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/yahtzee_v4_
 CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin-Windows/package
-CND_PACKAGE_NAME_Debug=yahtzee(v1).tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/yahtzee(v1).tar
+CND_PACKAGE_NAME_Debug=yahtzee(v4).tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/yahtzee(v4).tar
 # Release configuration
 CND_PLATFORM_Release=Cygwin-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/Cygwin-Windows
-CND_ARTIFACT_NAME_Release=yahtzee_v1_
-CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/yahtzee_v1_
+CND_ARTIFACT_NAME_Release=yahtzee_v4_
+CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/yahtzee_v4_
 CND_PACKAGE_DIR_Release=dist/Release/Cygwin-Windows/package
-CND_PACKAGE_NAME_Release=yahtzee(v1).tar
-CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/yahtzee(v1).tar
+CND_PACKAGE_NAME_Release=yahtzee(v4).tar
+CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/yahtzee(v4).tar
 #
 # include compiler specific variables
 #

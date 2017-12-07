@@ -418,78 +418,14 @@ int main(int argc, char* argv[])
                    cout << "\n\tThat is not a valid selection, please "
                            "choose a number between 1 and 13.";
                    goto tryAgn;
-               }
-  
+               }  
   
            }
          
            round ++;
        }  
        
-       vector<int> fScores;
-  
-       int uTotals[4];
-       int lTotals[4];
-       for(unsigned int i = 0; i < 4; i++)
-       {          
-           uTotals[i] = (cPoints[i][0] + cPoints[i][1] + 
-                   cPoints[i][2] + cPoints[i][3] + cPoints[i][4] + 
-                   cPoints[i][5]);
-           lTotals[i] = (cPoints[i][6] + cPoints[i][7] + 
-                   cPoints[i][8] + cPoints[i][9] + cPoints[i][10] + 
-                   cPoints[i][11] + cPoints[i][12]);
-       }  
-  
-       for(int i = 0; i < numP; i++)
-       {
-           int tempScr = 0;
-         
-           if(uTotals[1] >= 63)
-           {
-               tempScr += 35;
-           }
-           
-           if(yBonus[i] = true)
-           {
-               tempScr += 100;
-           }
-           
-           tempScr += (uTotals[i] + lTotals[i]);
-          
-           fScores.push_back(tempScr);  
-           pScore.push_back(make_pair(fScores[i], names[i]));
-       }
-      
-       cout << "\n\n\n              ****** Congratulations! You have completed "
-               "the game! ******";
-       cout << "\n\n              Scores in descending order are listed below: "
-               "\n\n\n";
-      
-       sort(pScore.rbegin(), pScore.rend());
-       for(vector<pair<int, string> >::const_iterator iter = pScore.begin
-               (); iter != pScore.end(); iter++)
-       {
-           cout << "\t" << iter->second << " " << iter->first << ".\n\n";
-       }
-      
-       cout << "\n\n\t\tWould you like to play again?";
-       cout << "\n\tEnter 'Y' to play again, or 'N' to end the game.";
-       cin >> pAgain;
-      
-       while((pAgain != "Y") && (pAgain != "N"))
-       {
-           cout << "\n\tThat answer is invalid. Enter capital 'Y' or capital "
-                   "'N.'";
-           cin >> pAgain;
-       }
 
-       names.clear();
-       fScores.clear();
-
-   }
-
-   return 0;
-}
 
 int sum(long t2)
 {
