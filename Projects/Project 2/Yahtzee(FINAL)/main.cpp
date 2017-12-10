@@ -444,7 +444,7 @@ int main(int argc, char* argv[])
        {
            int tempScr = 0;
          
-           if(uTotals[1] >= 63)
+           if(uTotals[i] >= 63)
            {
                tempScr += 35;
            }
