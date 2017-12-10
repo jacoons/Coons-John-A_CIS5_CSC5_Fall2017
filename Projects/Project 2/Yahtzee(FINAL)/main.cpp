@@ -499,9 +499,9 @@ int sum(long t2)
    int roll4 = (rand() % 6 + 1);
    int roll5 = (rand() % 6 + 1);
   
-   int startRoll = (roll1 + roll2 + roll3 + roll4 + roll5);
+   int sRoll = (roll1 + roll2 + roll3 + roll4 + roll5);
   
-   return startRoll;
+   return sRoll;
 }
 
 int rollDie(long t2)
